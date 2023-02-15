@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "780428303899",
+    "project_id": "composereader-7cede",
+    "storage_bucket": "composereader-7cede.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780428303899:android:0a86c0cb6456eeb25462be",
+        "android_client_info": {
+          "package_name": "com.example.composereader"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "780428303899-lad8omekurvft3an6a10d66p1n7r5tj8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC11vwHmq_GdqZYUnKQgFJDQrjI2AVJ82s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "780428303899-lad8omekurvft3an6a10d66p1n7r5tj8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
