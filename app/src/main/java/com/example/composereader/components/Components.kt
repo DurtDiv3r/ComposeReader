@@ -39,6 +39,26 @@ fun MyUI() {
 }
 
 @Composable
+fun UsernameInputForm(
+    modifier: Modifier = Modifier,
+    usernameLabel: String = "Username",
+    usernameState: MutableState<String>,
+    enabled: Boolean = true,
+    imeAction: ImeAction = ImeAction.Next,
+    onAction: KeyboardActions = KeyboardActions.Default
+) {
+    InputField(
+        modifier = modifier,
+        label = usernameLabel,
+        inputState = usernameState,
+        enabled = enabled,
+        imeAction = imeAction,
+        onAction = onAction,
+        keyboardType = KeyboardType.Email
+    )
+}
+
+@Composable
 fun EmailInputForm(
     modifier: Modifier = Modifier,
     emailLabel: String = "Email",
@@ -108,7 +128,7 @@ fun PasswordVisibility(passwordVisibility: MutableState<Boolean>) {
     }
 }
 
-fun onDone(trim: String, trim1: String) {
+fun onDone(username: String, email: String, password: String) {
     TODO("Not yet implemented")
 }
 

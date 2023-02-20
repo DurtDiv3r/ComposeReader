@@ -24,15 +24,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.composereader.R.*
-import com.example.composereader.components.EmailInputForm
-import com.example.composereader.components.MyUI
-import com.example.composereader.components.PasswordInputForm
-import com.example.composereader.components.SubmitButton
+import com.example.composereader.components.*
+import com.example.composereader.navigation.AppScreens
 
 @Composable
-fun LoginScreen(navController: NavHostController) {
+fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewModel = viewModel()) {
     MyUI()
     val showLoginForm = rememberSaveable {
         mutableStateOf(true)
@@ -42,12 +41,16 @@ fun LoginScreen(navController: NavHostController) {
         .padding(top = 16.dp), color = Color.Transparent) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
             if (showLoginForm.value) {
-                UserLoginForm(isLoading = false, isCreateAccount = false) { email, password ->
-                    //TODO: Firebase Login
+                UserLoginForm(isLoading = false, isCreateAccount = false) { username, email, password ->
+                    viewModel.userLogin(username, email, password) {
+                        navController.navigate(AppScreens.HomeScreen.name)
+                    }
                 }
             } else {
-                UserLoginForm(isLoading = false, isCreateAccount = true) { email, password ->
-                    //TODO: Firebase create account
+                UserLoginForm(isLoading = false, isCreateAccount = true) {username, email, password ->
+                    viewModel.userCreate(username, email, password) {
+                        navController.navigate(AppScreens.HomeScreen.name)
+                    }
                 }
             }
 
@@ -74,15 +77,17 @@ fun LoginScreen(navController: NavHostController) {
 fun UserLoginForm(
     isLoading: Boolean = false,
     isCreateAccount: Boolean = false,
-    onDone: (String, String) -> Unit = { email, password -> }
+    onDone: (String, String, String) -> Unit = { username, email, password -> }
 ) {
+    val userName = rememberSaveable { mutableStateOf("") }
     val userEmail = rememberSaveable { mutableStateOf("") }
     val userPassword = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = rememberSaveable { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val emailFocus = FocusRequester.Default
     val passwordFocus = FocusRequester.Default
 
-    val isValidFormValues = remember(userEmail.value, userPassword.value) {
+    val isValidFormValues = remember(userName.value, userEmail.value, userPassword.value) {
         userEmail.value.trim().isNotEmpty() && userPassword.value.trim().isNotEmpty()
     }
 
@@ -101,9 +106,14 @@ fun UserLoginForm(
     ) {
         if (isCreateAccount) {
             Text(text = stringResource(id = string.login_info), modifier = Modifier.padding(16.dp))
+
+            UsernameInputForm(usernameState = userName, enabled = !isLoading, onAction = KeyboardActions {
+                emailFocus.requestFocus()
+            })
         } else {
             Text(text = "")
         }
+
         EmailInputForm(emailState = userEmail,
             enabled = !isLoading,
             onAction = KeyboardActions {
@@ -117,7 +127,7 @@ fun UserLoginForm(
             passwordVisibility = passwordVisibility,
             onAction = KeyboardActions {
                 if (!isValidFormValues) return@KeyboardActions
-                onDone(userEmail.value.trim(), userPassword.value.trim())
+                onDone(userName.value.trim(), userEmail.value.trim(), userPassword.value.trim())
             })
 
         SubmitButton(
@@ -125,7 +135,7 @@ fun UserLoginForm(
             loading = isLoading,
             valid = isValidFormValues
         ) {
-            onDone(userEmail.value.trim(), userPassword.value.trim())
+            onDone(userName.value.trim(), userEmail.value.trim(), userPassword.value.trim())
             keyboardController?.hide()
         }
     }
