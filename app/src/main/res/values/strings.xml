@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Compose Reader</string>
+    <string name="login_info">Please enter valid email and password that is at least 6 characters</string>
 </resources>
