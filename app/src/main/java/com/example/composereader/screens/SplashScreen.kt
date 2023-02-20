@@ -17,6 +17,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.composereader.navigation.AppScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
@@ -32,7 +33,12 @@ fun SplashScreen(navController: NavController) {
             })
         )
         delay(3000)
-        navController.navigate(AppScreens.LoginScreen.name)
+
+        if (FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+            navController.navigate(AppScreens.LoginScreen.name)
+        } else {
+            navController.navigate(AppScreens.HomeScreen.name)
+        }
     }
 
     Surface(

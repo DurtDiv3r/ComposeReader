@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.composereader.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -58,16 +59,13 @@ class LoginScreenViewModel : ViewModel() {
     private fun saveUser(username: String) {
         val userId = authentication.currentUser?.uid
         //Initial setup of FireStore... Add test user
-        val user: MutableMap<String, Any> = HashMap()
-
-        user["user_id"] = userId.toString()
-        user["user_name"] = username
+        val user = UserModel(id = null, userId = userId.toString(), userName = username, profilePicture = "").toUserMap()
 
         val db = FirebaseFirestore.getInstance()
         db.collection("users").add(user).addOnSuccessListener {
             Log.d("FireBase", "onCreate ${it.id}")
         }.addOnFailureListener {
-            Log.d("FireBase", "Failed to add user ${it}")
+            Log.d("FireBase", "Failed to add user ${it.message}")
         }
         }
     }
