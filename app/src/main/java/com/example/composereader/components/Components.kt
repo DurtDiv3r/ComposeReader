@@ -41,9 +41,8 @@ fun MyUI() {
 }
 
 @Composable
-fun UsernameInputForm(
+fun UsernameInputField(
     modifier: Modifier = Modifier,
-    usernameLabel: String = stringResource(id = R.string.username),
     usernameState: MutableState<String>,
     enabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
@@ -51,7 +50,7 @@ fun UsernameInputForm(
 ) {
     InputField(
         modifier = modifier,
-        label = usernameLabel,
+        label = stringResource(id = R.string.username),
         inputState = usernameState,
         enabled = enabled,
         imeAction = imeAction,
@@ -61,9 +60,8 @@ fun UsernameInputForm(
 }
 
 @Composable
-fun EmailInputForm(
+fun EmailInputField(
     modifier: Modifier = Modifier,
-    emailLabel: String = stringResource(id = R.string.email),
     emailState: MutableState<String>,
     enabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
@@ -71,7 +69,7 @@ fun EmailInputForm(
 ) {
     InputField(
         modifier = modifier,
-        label = emailLabel,
+        label = stringResource(id = R.string.email),
         inputState = emailState,
         enabled = enabled,
         imeAction = imeAction,
@@ -81,9 +79,8 @@ fun EmailInputForm(
 }
 
 @Composable
-fun PasswordInputForm(
+fun PasswordInputField(
     modifier: Modifier,
-    passwordLabel: String = stringResource(id = R.string.password),
     passwordState: MutableState<String>,
     enabled: Boolean,
     passwordVisibility: MutableState<Boolean>,
@@ -101,7 +98,7 @@ fun PasswordInputForm(
             passwordState.value = state
         },
         label = {
-            Text(text = passwordLabel)
+            Text(text = stringResource(id = R.string.password))
         },
         singleLine = true,
         textStyle = TextStyle(fontSize = 16.sp, color = Color.White),
@@ -134,7 +131,6 @@ fun onDone(username: String, email: String, password: String) {
     TODO("Not yet implemented")
 }
 
-
 @Composable
 fun InputField(
     modifier: Modifier = Modifier,
@@ -146,7 +142,6 @@ fun InputField(
     imeAction: ImeAction = ImeAction.Next,
     onAction: KeyboardActions = KeyboardActions.Default
 ) {
-
     OutlinedTextField(
         value = inputState.value,
         onValueChange = { state ->
@@ -164,13 +159,26 @@ fun InputField(
 }
 
 @Composable
-fun SubmitButton(label: String,
-                 loading: Boolean,
-                 valid: Boolean,
-                 onClick: () -> Unit) {
-    Button(onClick = onClick, modifier = Modifier
-        .padding(50.dp)
-        .fillMaxWidth(), enabled = !loading && valid, shape = CircleShape) {
-        if (loading) CircularProgressIndicator(modifier = Modifier.size(25.dp)) else Text(text = label)
+fun SubmitButton(
+    label: String,
+    loading: Boolean,
+    valid: Boolean,
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier
+            .padding(50.dp)
+            .fillMaxWidth(),
+        enabled = !loading && valid,
+        shape = CircleShape
+    ) {
+        if (loading) {
+            CircularProgressIndicator(modifier = Modifier.size(25.dp))
+        } else {
+            Text(
+                text = label
+            )
+        }
     }
 }
