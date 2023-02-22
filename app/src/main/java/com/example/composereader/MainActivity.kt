@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.composereader.components.MyUI
 import com.example.composereader.navigation.AppNavigation
 import com.example.composereader.ui.theme.ComposeReaderTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,16 +23,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeReaderTheme {
-                //Initial setup of FireStore... Add test user
-//                val db = FirebaseFirestore.getInstance()
-//                val user: MutableMap<String, Any> = HashMap()
-//
-//                user["firstName"] = "Bob"
-//                user["lastName"] = "Smith"
-
-
+                MyUI()
                 ComposeReaderApp()
-
             }
         }
     }
@@ -44,12 +37,6 @@ fun ComposeReaderApp() {
             .fillMaxSize(),
         color = MaterialTheme.colors.background
     ) {
-//                    db.collection("users").add(user).addOnSuccessListener {
-//                        Log.d("FireBase", "onCreate ${it.id}")
-//                    }.addOnFailureListener {
-//                        Log.d("FireBase", "Failed to add user ${it}")
-//                    }
-
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -63,6 +50,7 @@ fun ComposeReaderApp() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
+    MyUI()
     ComposeReaderTheme {
     }
 }

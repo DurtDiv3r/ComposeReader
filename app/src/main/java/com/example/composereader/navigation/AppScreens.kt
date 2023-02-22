@@ -3,7 +3,6 @@ package com.example.composereader.navigation
 enum class AppScreens {
     SplashScreen,
     LoginScreen,
-    NewUserScreen,
     HomeScreen,
     DetailsScreen,
     UpdateScreen,
@@ -11,7 +10,7 @@ enum class AppScreens {
     SearchScreen;
 
     companion object {
-        fun fromRoute(route: String?): AppScreens = when (route?.substringBefore("/")) {
+        fun fromRoute(route: String): AppScreens = when (route.substringBefore("/")) {
             SplashScreen.name -> SplashScreen
             LoginScreen.name -> LoginScreen
             HomeScreen.name -> HomeScreen
@@ -19,7 +18,6 @@ enum class AppScreens {
             DetailsScreen.name -> DetailsScreen
             StatisticsScreen.name -> StatisticsScreen
             SearchScreen.name -> SearchScreen
-            null -> LoginScreen
             else -> throw IllegalArgumentException("Route $route does not exist")
         }
     }
