@@ -13,6 +13,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.composereader.R
 
 @Preview
 @Composable
@@ -41,7 +43,7 @@ fun MyUI() {
 @Composable
 fun UsernameInputForm(
     modifier: Modifier = Modifier,
-    usernameLabel: String = "Username",
+    usernameLabel: String = stringResource(id = R.string.username),
     usernameState: MutableState<String>,
     enabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
@@ -61,7 +63,7 @@ fun UsernameInputForm(
 @Composable
 fun EmailInputForm(
     modifier: Modifier = Modifier,
-    emailLabel: String = "Email",
+    emailLabel: String = stringResource(id = R.string.email),
     emailState: MutableState<String>,
     enabled: Boolean = true,
     imeAction: ImeAction = ImeAction.Next,
@@ -81,7 +83,7 @@ fun EmailInputForm(
 @Composable
 fun PasswordInputForm(
     modifier: Modifier,
-    passwordLabel: String = "Password",
+    passwordLabel: String = stringResource(id = R.string.password),
     passwordState: MutableState<String>,
     enabled: Boolean,
     passwordVisibility: MutableState<Boolean>,

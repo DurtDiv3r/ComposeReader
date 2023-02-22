@@ -36,18 +36,29 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
     val showLoginForm = rememberSaveable {
         mutableStateOf(true)
     }
-    Surface(modifier = Modifier
-        .fillMaxSize()
-        .padding(top = 16.dp), color = Color.Transparent) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Top) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp), color = Color.Transparent
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
             if (showLoginForm.value) {
-                UserLoginForm(isLoading = false, isCreateAccount = false) { username, email, password ->
+                UserLoginForm(
+                    isLoading = false,
+                    isCreateAccount = false
+                ) { username, email, password ->
                     viewModel.userLogin(username, email, password) {
                         navController.navigate(AppScreens.HomeScreen.name)
                     }
                 }
             } else {
-                UserLoginForm(isLoading = false, isCreateAccount = true) {username, email, password ->
+                UserLoginForm(
+                    isLoading = false,
+                    isCreateAccount = true
+                ) { username, email, password ->
                     viewModel.userCreate(username, email, password) {
                         navController.navigate(AppScreens.HomeScreen.name)
                     }
@@ -59,11 +70,14 @@ fun LoginScreen(navController: NavHostController, viewModel: LoginScreenViewMode
                 val text = if (showLoginForm.value) "Sign Up" else "Login"
 
                 Text(text = "New User? ")
-                Text(text = text, modifier = Modifier
-                    .clickable {
-                        showLoginForm.value = !showLoginForm.value
-                    }
-                    .padding(5.dp), fontWeight = FontWeight.Bold, color = MaterialTheme.colors.secondaryVariant)
+                Text(text = text,
+                    modifier = Modifier
+                        .clickable {
+                            showLoginForm.value = !showLoginForm.value
+                        }
+                        .padding(5.dp),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colors.secondaryVariant)
             }
         }
     }
@@ -107,9 +121,12 @@ fun UserLoginForm(
         if (isCreateAccount) {
             Text(text = stringResource(id = string.login_info), modifier = Modifier.padding(16.dp))
 
-            UsernameInputForm(usernameState = userName, enabled = !isLoading, onAction = KeyboardActions {
-                emailFocus.requestFocus()
-            })
+            UsernameInputForm(
+                usernameState = userName,
+                enabled = !isLoading,
+                onAction = KeyboardActions {
+                    emailFocus.requestFocus()
+                })
         } else {
             Text(text = "")
         }
@@ -131,7 +148,9 @@ fun UserLoginForm(
             })
 
         SubmitButton(
-            label = if (isCreateAccount) "Create Account" else "Login",
+            label = if (isCreateAccount) stringResource(id = string.create_account_label) else stringResource(
+                id = string.login_label
+            ),
             loading = isLoading,
             valid = isValidFormValues
         ) {

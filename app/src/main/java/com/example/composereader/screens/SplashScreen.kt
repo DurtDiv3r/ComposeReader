@@ -51,6 +51,4 @@ fun SplashScreen(navController: NavController) {
         val composition by rememberLottieComposition(spec = LottieCompositionSpec.Url("https://assets2.lottiefiles.com/private_files/lf30_FJSIAJ.json"))
         LottieAnimation(composition = composition, iterations = 1)
     }
-//    }
-
 }

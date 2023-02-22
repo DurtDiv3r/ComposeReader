@@ -13,7 +13,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 class LoginScreenViewModel : ViewModel() {
-    //    val loadingState = MutableStateFlow(IDLE)
     private val authentication: FirebaseAuth = Firebase.auth
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
@@ -58,8 +57,12 @@ class LoginScreenViewModel : ViewModel() {
 
     private fun saveUser(username: String) {
         val userId = authentication.currentUser?.uid
-        //Initial setup of FireStore... Add test user
-        val user = UserModel(id = null, userId = userId.toString(), userName = username, profilePicture = "").toUserMap()
+        val user = UserModel(
+            id = null,
+            userId = userId.toString(),
+            userName = username,
+            profilePicture = ""
+        ).toUserMap()
 
         val db = FirebaseFirestore.getInstance()
         db.collection("users").add(user).addOnSuccessListener {
@@ -67,5 +70,5 @@ class LoginScreenViewModel : ViewModel() {
         }.addOnFailureListener {
             Log.d("FireBase", "Failed to add user ${it.message}")
         }
-        }
     }
+}
